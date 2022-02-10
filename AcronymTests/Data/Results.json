@@ -1,0 +1,26 @@
+[
+  {"sf": "NASA",
+    "lfs":
+    [
+      {"lf": "National Aeronautics and Space Administration",
+        "freq": 84,
+        "since": 1982,
+        "vars": [
+          {"lf": "National Aeronautics and Space Administration",
+            "freq": 81,
+            "since": 1982
+          },
+          {"lf": "National Aeronautic and Space Administration",
+            "freq": 2,
+            "since": 1992
+          },
+          {"lf": "National Aeronautics and Space administration",
+            "freq": 1,
+            "since": 2000
+          }
+        ]
+      }
+    ]
+  }
+]
+
