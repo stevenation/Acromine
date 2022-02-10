@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Result: Codable {
+struct Results: Codable {
     let abbreviation: String
     let longForms: [LongForm]
 
@@ -40,5 +40,11 @@ struct Variation: Codable {
         case surfaceForm = "lf"
         case frequency = "freq"
         case year = "since"
+    }
+}
+
+extension Results: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.abbreviation == rhs.abbreviation
     }
 }

@@ -8,7 +8,7 @@
 @testable import Acronym
 import XCTest
 
-class ResultsModelTest: XCTestCase, DecodableTestCase {
+class ResultsModelTests: XCTestCase, DecodableTestCase {
     var dictionary: NSDictionary!
     var sut: [Results]!
 
@@ -30,12 +30,12 @@ class ResultsModelTest: XCTestCase, DecodableTestCase {
     }
 
     func testDecodableSetsLongFormsRepForm() throws {
-        let longForms = dictionary["lf"] as? [[String: Any]]
+        let longForms = dictionary["lfs"] as? [[String: Any]]
         XCTAssertEqual(sut[0].longForms[0].repForm, longForms?[0]["lf"] as? String)
     }
 
     func testDecodableSetsLongForms() throws {
-        if let longForms = dictionary["lf"] as? [[String: Any]] {
+        if let longForms = dictionary["lfs"] as? [[String: Any]] {
             for index in 0 ..< longForms.count {
                 XCTAssertEqual(sut[0].longForms[index].frequency, longForms[index]["freq"] as? Int)
                 XCTAssertEqual(sut[0].longForms[index].repForm, longForms[index]["lf"] as? String)
@@ -53,21 +53,4 @@ class ResultsModelTest: XCTestCase, DecodableTestCase {
     }
 }
 
-protocol DecodableTestCase: AnyObject {
-    associatedtype T: Decodable
-    var dictionary: NSDictionary! { get set }
-    var sut: T! { get set }
-}
 
-extension DecodableTestCase {
-    func givenSUTFromJSON(fileName: String = "\(T.self)",
-                          file: StaticString = #file,
-                          line: UInt = #line) throws
-    {
-        let decoder = JSONDecoder()
-        let data = try Data.fromJSON(fileName: fileName, file: file, line: line)
-        var response = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSArray
-        dictionary = response?[0] as? NSDictionary
-        sut = try decoder.decode(T.self, from: data)
-    }
-}

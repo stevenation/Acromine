@@ -16,19 +16,21 @@ protocol SearchViewModelProtocol {
 
 final class SearchViewModel: NSObject, SearchViewModelProtocol {
     let networkManager: NetworkManager
+    private var reloadTableView: (() -> Void)?
     private var searchList = [SearchCellViewModel]() {
         didSet {
             reloadTableView?()
         }
     }
+
     var searchListCount: Int {
         return searchList.count
     }
-    private var reloadTableView: (() -> Void)?
-    init(_ manager: NetworkManager = NetworkManager()) {
+
+    init(_ manager: NetworkManager = NetworkManager.shared) {
         self.networkManager = manager
     }
-    
+
     func bindToTableView(_ completion: @escaping () -> Void) {
         completion()
         reloadTableView = completion
@@ -39,15 +41,16 @@ final class SearchViewModel: NSObject, SearchViewModelProtocol {
     }
 
     func fetchData(_ abbrv: String) {
-        networkManager.fetchData(abbrv) { [weak self] data, error in
-            guard error == nil else {
-                return
-            }
-            guard let data = data else {
+        _ = networkManager.fetchData(abbrv) { [weak self] data, error in
+            guard let data = data, error == nil else {
                 return
             }
             DispatchQueue.main.async {
-                self?.searchList = data
+                guard !data.isEmpty else {
+                    self?.searchList = []
+                    return
+                }
+                self?.searchList = data[0].longForms
                     .sorted(by: { $0.repForm < $1.repForm })
                     .map { SearchCellViewModel($0) }
             }

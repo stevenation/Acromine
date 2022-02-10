@@ -10,13 +10,15 @@ import UIKit
 
 struct SearchCellViewModel {
     private let longForm: LongForm
-    init(_ lonForm: LongForm) {
-        self.longForm = lonForm
+    init(_ longForm: LongForm) {
+        self.longForm = longForm
     }
+
     var name: String {
         return longForm.repForm.capitalized
     }
+
     var year: String {
-        return " Since: \(longForm.year)"
+        return "Since: \(longForm.year)"
     }
 }

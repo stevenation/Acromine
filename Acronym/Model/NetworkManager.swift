@@ -7,38 +7,72 @@
 
 import Foundation
 
-final class NetworkManager: NSObject {
-    private let baseURL: String = "http://www.nactem.ac.uk/software/acromine/dictionary.py"
+protocol NetworkProtocol {
+    func fetchData(
+        _ abbrv: String,
+        completion:
+        @escaping ([Results]?, Error?) -> Void) -> URLSessionTaskProtocol?
+}
 
-    func fetchData(_ abbrv: String, completion: @escaping ([LongForm]?, Error?) -> Void) {
+final class NetworkManager: NetworkProtocol {
+    static let shared = NetworkManager(
+        baseURL: "http://www.nactem.ac.uk/software/acromine/dictionary.py",
+        session: URLSession.shared,
+        responseQueue: .main)
+    let baseURL: String
+    let session: URLSessionProtocol
+    let responseQueue: DispatchQueue?
+    init(
+        baseURL: String,
+        session: URLSessionProtocol,
+        responseQueue: DispatchQueue?)
+    {
+        self.baseURL = baseURL
+        self.session = session
+        self.responseQueue = responseQueue
+    }
+
+    func fetchData(_ abbrv: String, completion: @escaping ([Results]?, Error?) -> Void) -> URLSessionTaskProtocol? {
         guard var urlComponents = URLComponents(string: baseURL) else {
-            return
+            return nil
         }
         urlComponents.query = "sf=\(abbrv)"
-        guard let url = urlComponents.url else { return }
-
-        URLSession.shared.dataTask(with: url) { data, URLResponse, error in
-            guard error == nil else {
-                completion(nil, error)
-                return
-            }
+        guard let url = urlComponents.url else {
+            return nil
+        }
+        let task = self.session.makeDataTask(with: url) { [weak self] data, URLResponse, error in
+            guard let self = self else { return }
             guard let data = data,
                   let response = URLResponse as? HTTPURLResponse,
-                  response.statusCode == 200
+                  response.statusCode == 200,
+                  error == nil
             else {
+                self.dispatchResult(error: error, completion: completion)
                 return
             }
             do {
-                let result = try JSONDecoder().decode([Result].self, from: data)
-                if result.isEmpty {
-                    completion([], nil)
-                } else {
-                    completion(result[0].longForms, nil)
-                }
-            } catch {
-                completion(nil, error)
-            }
+                let result = try JSONDecoder().decode([Results].self, from: data)
+                self.dispatchResult(models: result, completion: completion)
 
-        }.resume()
+            } catch {
+                self.dispatchResult(error: error, completion: completion)
+            }
+        }
+        task.resume()
+        return task
+    }
+
+    private func dispatchResult<Type>(
+        models: Type? = nil,
+        error: Error? = nil,
+        completion: @escaping (Type?, Error?) -> Void)
+    {
+        guard let responseQueue = responseQueue else {
+            completion(models, error)
+            return
+        }
+        responseQueue.async {
+            completion(models, error)
+        }
     }
 }
