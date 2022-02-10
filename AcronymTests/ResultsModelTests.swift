@@ -31,26 +31,22 @@ class ResultsModelTests: XCTestCase, DecodableTestCase {
 
     func testDecodableSetsLongFormsRepForm() throws {
         let longForms = dictionary["lfs"] as? [[String: Any]]
-        XCTAssertEqual(sut[0].longForms[0].repForm, longForms?[0]["lf"] as? String)
+        XCTAssertEqual(sut[0].longForms[0].repForm, longForms?[0]["lf"] as! String)
     }
 
     func testDecodableSetsLongForms() throws {
-        if let longForms = dictionary["lfs"] as? [[String: Any]] {
-            for index in 0 ..< longForms.count {
-                XCTAssertEqual(sut[0].longForms[index].frequency, longForms[index]["freq"] as? Int)
-                XCTAssertEqual(sut[0].longForms[index].repForm, longForms[index]["lf"] as? String)
-                XCTAssertEqual(sut[0].longForms[index].year, longForms[index]["since"] as? Int)
+        let longForms = dictionary["lfs"] as! [[String: Any]]
+        for index in 0 ..< longForms.count {
+            XCTAssertEqual(sut[0].longForms[index].frequency, longForms[index]["freq"] as! Int)
+            XCTAssertEqual(sut[0].longForms[index].repForm, longForms[index]["lf"] as! String)
+            XCTAssertEqual(sut[0].longForms[index].year, longForms[index]["since"] as! Int)
 
-                if let vars = longForms[index]["vars"] as? [[String: Any]] {
-                    for i in 0 ..< vars.count {
-                        XCTAssertEqual(sut[0].longForms[index].variations[i].surfaceForm, vars[i]["lf"] as? String)
-                        XCTAssertEqual(sut[0].longForms[index].variations[i].frequency, vars[i]["freq"] as? Int)
-                        XCTAssertEqual(sut[0].longForms[index].variations[i].year, vars[i]["since"] as? Int)
-                    }
-                }
+            let vars = longForms[index]["vars"] as! [[String: Any]]
+            for i in 0 ..< vars.count {
+                XCTAssertEqual(sut[0].longForms[index].variations![i].repForm, vars[i]["lf"] as! String)
+                XCTAssertEqual(sut[0].longForms[index].variations![i].frequency, vars[i]["freq"] as! Int)
+                XCTAssertEqual(sut[0].longForms[index].variations![i].year, vars[i]["since"] as! Int)
             }
         }
     }
 }
-
-

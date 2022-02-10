@@ -21,4 +21,8 @@ struct SearchCellViewModel {
     var year: String {
         return "Since: \(longForm.year)"
     }
+    
+    var frequency: String {
+        return "Frequency: \(longForm.frequency)"
+    }
 }

@@ -13,16 +13,16 @@ class URLSessionProtocolTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        super.setUp()
+        try super.setUpWithError()
         session = URLSession(configuration: .default)
-        url = URL(string: "https://example.com")!
+        url = URL(string: "http://www.nactem.ac.uk/software/acromine/dictionary.py?sf=nasa")!
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         session = nil
         url = nil
-        super.tearDown()
+        try super.tearDownWithError()
     }
 
     func testURLSessionTaskConformsToURLSessionTaskProtocol() {
@@ -43,7 +43,6 @@ class URLSessionProtocolTests: XCTestCase {
     }
 
     func testURLSessionMakeDataTaskCreatesTaskWithPassedInCompletion() {
-        // given
         let expectation =
             expectation(description: "Completion should be called")
         let task = session.makeDataTask(

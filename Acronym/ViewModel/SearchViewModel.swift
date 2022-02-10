@@ -14,7 +14,7 @@ protocol SearchViewModelProtocol {
     func bindToTableView(_ closure: @escaping () -> Void)
 }
 
-final class SearchViewModel: NSObject, SearchViewModelProtocol {
+final class SearchViewModel: SearchViewModelProtocol {
     let networkManager: NetworkManager
     private var reloadTableView: (() -> Void)?
     private var searchList = [SearchCellViewModel]() {

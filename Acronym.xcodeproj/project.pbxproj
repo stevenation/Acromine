@@ -134,6 +134,7 @@
 				2B8D960727B490C5002BD185 /* Views */,
 				2B8D960027B44ECE002BD185 /* ViewModel */,
 				2B8D95FB27B44487002BD185 /* Model */,
+				2B8D960B27B493D9002BD185 /* Info.plist */,
 			);
 			path = Acronym;
 			sourceTree = "<group>";
@@ -142,7 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				2B8D963727B5A01D002BD185 /* DecodableTestCase.swift */,
-				2B8D962827B58710002BD185 /* Data */,
+				2B8D962827B58710002BD185 /* MockData */,
 				2B8D962227B50435002BD185 /* URLSessionProtocolTests.swift */,
 				2B8D962427B50536002BD185 /* NetworkManagerTests.swift */,
 				2B8D962627B58389002BD185 /* MockURLSession.swift */,
@@ -191,14 +192,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		2B8D962827B58710002BD185 /* Data */ = {
+		2B8D962827B58710002BD185 /* MockData */ = {
 			isa = PBXGroup;
 			children = (
 				2B8D962927B58710002BD185 /* GETResultsMissingValuesResponse.json */,
 				2B8D962A27B58710002BD185 /* Results.json */,
 				2B8D962B27B58710002BD185 /* GETResultsResponse.json */,
 			);
-			path = Data;
+			path = MockData;
 			sourceTree = "<group>";
 		};
 		2B8D963D27B5A82E002BD185 /* Storyboards */ = {
@@ -213,7 +214,6 @@
 		2B8D963E27B5A848002BD185 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2B8D960B27B493D9002BD185 /* Info.plist */,
 				2B8D95D427B443D3002BD185 /* Assets.xcassets */,
 			);
 			path = Resources;

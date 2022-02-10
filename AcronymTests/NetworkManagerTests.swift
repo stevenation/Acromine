@@ -17,7 +17,7 @@ class NetworkManagerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        super.setUp()
+        try super.setUpWithError()
         baseURL = "http://www.nactem.ac.uk/software/acromine/dictionary.py"
         mockSession = MockURLSession()
         sut = NetworkManager(baseURL: baseURL,
@@ -27,6 +27,10 @@ class NetworkManagerTests: XCTestCase {
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        baseURL = nil
+        mockSession = nil
+        sut = nil
+        try super.tearDownWithError()
     }
 
     func whenGetdata(
@@ -78,8 +82,6 @@ class NetworkManagerTests: XCTestCase {
                                        httpVersion: nil,
                                        headerFields: nil)
         mockTask.completionHandler(data, response, error)
-        
-        // then
         waitForExpectations(timeout: 0.2) { _ in
             XCTAssertTrue(thread.isMainThread, line: line)
         }
@@ -95,7 +97,6 @@ class NetworkManagerTests: XCTestCase {
     }
       
     func testSharedSetsBaseURL() {
-        // given
         let baseURL = URL(
             string: "http://www.nactem.ac.uk/software/acromine/dictionary.py")!
         let networkBaseURL = URL(string: NetworkManager.shared.baseURL)!
@@ -218,5 +219,3 @@ class NetworkManagerTests: XCTestCase {
         verifyGetdataDispatchedToMain(data: data)
     }
 }
-
-
