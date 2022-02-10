@@ -109,6 +109,7 @@
 		2B8D95BC27B443CF002BD185 = {
 			isa = PBXGroup;
 			children = (
+				2B8D964127B5BF9D002BD185 /* Networking */,
 				2B8D95C727B443CF002BD185 /* Acronym */,
 				2B8D95E127B443D4002BD185 /* AcronymTests */,
 				2B8D95EB27B443D4002BD185 /* AcronymUITests */,
@@ -166,9 +167,7 @@
 		2B8D95FB27B44487002BD185 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2B8D95FE27B447BA002BD185 /* NetworkManager.swift */,
 				2B8D95FC27B4451A002BD185 /* ResultModel.swift */,
-				2B8D962027B50022002BD185 /* URLSessionProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -226,6 +225,15 @@
 				2B8D95CA27B443CF002BD185 /* SceneDelegate.swift */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		2B8D964127B5BF9D002BD185 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2B8D962027B50022002BD185 /* URLSessionProtocol.swift */,
+				2B8D95FE27B447BA002BD185 /* NetworkManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
