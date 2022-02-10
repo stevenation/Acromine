@@ -109,7 +109,6 @@
 		2B8D95BC27B443CF002BD185 = {
 			isa = PBXGroup;
 			children = (
-				2B8D964127B5BF9D002BD185 /* Networking */,
 				2B8D95C727B443CF002BD185 /* Acronym */,
 				2B8D95E127B443D4002BD185 /* AcronymTests */,
 				2B8D95EB27B443D4002BD185 /* AcronymUITests */,
@@ -130,6 +129,7 @@
 		2B8D95C727B443CF002BD185 /* Acronym */ = {
 			isa = PBXGroup;
 			children = (
+				2B8D964127B5BF9D002BD185 /* Networking */,
 				2B8D963F27B5A886002BD185 /* Delegates */,
 				2B8D963E27B5A848002BD185 /* Resources */,
 				2B8D960727B490C5002BD185 /* Views */,
